@@ -33,14 +33,14 @@ public with sharing class OrderFulfillmentService {
     return new List<OrderFulfillmentResponseWrapper>{ makeCallout(req) };
   }
 
-  // Query for the orders and create the request to the NPS service
+  // Method to Query for the orders and create the request to the NPS service
   private static HttpRequest createOrderFulfillmentRequest(List<Id> orderIds) {
     // List of order fulfillment wrapper objects to be sent to the NPS service
     List<OrderFulfillmentWrapper> orderWrapperList = new List<OrderFulfillmentWrapper>();
 
     // Iterate over the orders and send a notification to the NPS service
     for (Order orderRec : [SELECT Id, OrderNumber, Account.PersonEmail FROM Order WHERE Id IN :orderIds]) {
-      // TODO -  Currnet request body format does not have an array, if we can change that then we can for each email multiple order details
+      // TODO -  Current request body format does not have an array, if we can change that then we can for each email multiple order details
       // but current approach will send email for each order separately
       // Potentential update request format would be {customerEmail:test@test.com,orders:[{sfId:'12adf',orderNumber:'1234'},{sfId:'12adfasd',orderNumber:'5678'}]}
       orderWrapperList.add(
@@ -56,20 +56,20 @@ public with sharing class OrderFulfillmentService {
     // Create a request to the NPS service
     HttpRequest req = new HttpRequest();
     //TODO - Get authentication details and update the code based on authentication mechanism
-    req.setEndpoint('callout:My_Named_Credential/some_path');
+    req.setEndpoint('callout:Mock_NPS_API/orders');
     req.setMethod('POST');
     req.setHeader('Content-Type', 'application/json');
     req.setBody(JSON.serialize(orderWrapperList));
     return req;
   }
 
-  // Make the callout to the NPS service and return the response
+  // Method to Make the callout to the NPS service and return the response
   private static OrderFulfillmentResponseWrapper makeCallout(HttpRequest req) {
     OrderFulfillmentResponseWrapper response = new OrderFulfillmentResponseWrapper();
     try {
       Http http = new Http();
       HttpResponse res = http.send(req);
-      response.isSuccess = true;
+      response.isSuccess = res.getStatusCode() == 200 ? true : false;
       response.statusCode = res.getStatusCode();
       response.responseBody = res.getBody();
     } catch (Exception e) {
@@ -82,7 +82,6 @@ public with sharing class OrderFulfillmentService {
       response.isSuccess = false;
       response.errorMessage = e.getMessage();
     }
-
     return response;
   }
 

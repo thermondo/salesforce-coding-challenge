@@ -92,6 +92,7 @@ private class OrderFulfillmentServiceTest {
   }
   @isTest
   static void testSendOrderFulfillmentNotification() {
+    // TODO - update this test to use a proper test user with the correct permissions
     Order testOrder = [SELECT Id, Status FROM Order LIMIT 1];
 
     // Set mock callout class
@@ -114,4 +115,45 @@ private class OrderFulfillmentServiceTest {
 
     Test.stopTest();
   }
+
+  // Test to verify that the `sendOrderFulfillmentNotification` method returns an empty list
+  // when the `orderIds` list is empty
+  @isTest
+  static void testSendOrderFulfillmentNotificationEmptyOrderIdsList() {
+    // TODO - update this test to use a proper test user with the correct permissions
+
+    // Call the `sendOrderFulfillmentNotification` method
+    Test.startTest();
+    List<OrderFulfillmentService.OrderFulfillmentResponseWrapper> response = OrderFulfillmentService.sendOrderFulfillmentNotification(
+      new List<Id>{}
+    );
+    // Assert that the response is an empty list
+    System.assertEquals(0, response.size());
+    Test.stopTest();
+  }
+
+  @isTest
+  static void testFailedResponse() {
+    // TODO - update this test to use a proper test user with the correct permissions
+    Order testOrder = [SELECT Id, Status FROM Order LIMIT 1];
+
+    // Set up the mock HTTP callout class
+    Test.setMock(HttpCalloutMock.class, new MockOrderFulfillmentFailedResponse());
+
+    // Call the method that makes the callout and verify the response
+    Test.startTest();
+    List<OrderFulfillmentService.OrderFulfillmentResponseWrapper> responses = OrderFulfillmentService.sendOrderFulfillmentNotification(
+      new List<Id>{ testOrder.Id }
+    );
+    Test.stopTest();
+    OrderFulfillmentService.OrderFulfillmentResponseWrapper response = responses[0];
+    System.assertEquals(false, response.isSuccess, 'Expected a failed response');
+    System.assertEquals(500, response.statusCode, 'Expected a status code of 500');
+    System.assertEquals(
+      'Internal server error',
+      response.responseBody,
+      'Expected an error message of "Internal server error"'
+    );
+  }
+  //TODO write unit test for the large number of records
 }

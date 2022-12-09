@@ -7,6 +7,9 @@
         <locationY>288</locationY>
         <actionName>OrderFulfillmentService</actionName>
         <actionType>apex</actionType>
+        <connector>
+            <targetReference>Create_Integration_Log</targetReference>
+        </connector>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
         <inputParameters>
             <name>orderIds</name>
@@ -32,6 +35,7 @@
         </outputParameters>
     </actionCalls>
     <apiVersion>56.0</apiVersion>
+    <description>Flow to send the Order Details to the NPS Service (External System)</description>
     <environments>Default</environments>
     <interviewLabel>OrderAfterUpdateFlow {!$Flow.CurrentDateTime}</interviewLabel>
     <label>OrderAfterUpdateFlow</label>
@@ -54,22 +58,48 @@
         </value>
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
+    <recordCreates>
+        <name>Create_Integration_Log</name>
+        <label>Create Integration Log</label>
+        <locationX>308</locationX>
+        <locationY>408</locationY>
+        <inputAssignments>
+            <field>Error_Message__c</field>
+            <value>
+                <elementReference>errorMessage</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Is_Success__c</field>
+            <value>
+                <elementReference>isSuccess</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Response_Body__c</field>
+            <value>
+                <elementReference>responseBody</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status_Code__c</field>
+            <value>
+                <elementReference>statusCode</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Integration_Log__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <start>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <doesRequireRecordChangedToMeetCriteria>true</doesRequireRecordChangedToMeetCriteria>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Status</field>
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Fulfilled</stringValue>
-            </value>
-        </filters>
-        <filters>
-            <field>Status</field>
-            <operator>IsChanged</operator>
-            <value>
-                <booleanValue>true</booleanValue>
             </value>
         </filters>
         <object>Order</object>
