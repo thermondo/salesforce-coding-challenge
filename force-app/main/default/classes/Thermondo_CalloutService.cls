@@ -17,6 +17,7 @@ public without sharing class Thermondo_CalloutService {
         
         request.setEndpoint('https://salesforce-coding-challenge.herokuapp.com/orders');
         request.setHeader('Content-Type', 'application/json');
+        // THIS IS ONLY FOR TEST PURPOSES
         request.setHeader('Username', 'test123');
         request.setHeader('Password', '12345');
         request.setBody(payload);
