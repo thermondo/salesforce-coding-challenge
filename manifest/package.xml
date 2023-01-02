@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+    <types>
+        <members>OrderStatus</members>
+        <name>StandardValueSet</name>
+    </types>
+
+    <types>
+        <members>Thermondo_TestInvocableMethod</members>
+        <name>Flow</name>
+    </types>
+
+    <types>
+        <members>Thermondo_InvocableAction</members>
+        <members>Thermondo_CalloutService</members>
+        <members>Thermondo_Constants</members>
+        <members>Thermondo_InvocableAction_Test</members>
+        <members>Thermondo_CalloutService_Test</members>
+        <members>Thermondo_CalloutResponseHandler</members>
+        <name>ApexClass</name>
+    </types>    
+
+    <types>
+        <members>Thermondo</members>
+        <name>RemoteSiteSetting</name>
+    </types>    
+
+    <types>
+        <members>ThermondoNC</members>
+        <name>NamedCredential</name>
+    </types>      
+    
+    <version>56.0</version>
+</Package>
