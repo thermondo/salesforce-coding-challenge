@@ -23,7 +23,12 @@
     <types>
         <members>Thermondo</members>
         <name>RemoteSiteSetting</name>
-    </types>      
+    </types>    
 
+    <types>
+        <members>ThermondoNC</members>
+        <name>NamedCredential</name>
+    </types>      
+    
     <version>56.0</version>
 </Package>
