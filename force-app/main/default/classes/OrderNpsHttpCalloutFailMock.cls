@@ -5,7 +5,7 @@ public  class OrderNpsHttpCalloutFailMock implements HttpCalloutMock {
         // Fake response
         HttpResponse response = new HttpResponse();
         response.setHeader('Content-Type', 'application/json');
-        response.setBody('[{"Description": "SERVER_ERROR"}]');
+        response.setBody('[{"SERVER_ERROR"}]');
         response.setStatusCode(500);
         return response; 
     }

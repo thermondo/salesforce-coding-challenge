@@ -1,9 +1,9 @@
 
 @isTest
 public class NpsCalloutServiceTest {
-
+//To do : creation of custom label for String messages
     @isTest
-    public static void isNpsCalloutsuccessTest()
+    public static void isNpsCalloutsuccess()
    {
     // mock callout class 
     Test.setMock(HttpCalloutMock.class, new OrderNpsHttpCalloutSuccessMock()); 
@@ -12,7 +12,7 @@ public class NpsCalloutServiceTest {
     HttpResponse response = NpsCalloutService.sendRequest(requestPayload);
     String contentType = response.getHeader('Content-Type');
     String actualValue = response.getBody();
-    String expectedValue = '[{"Description": "SUCCESS"}]';
+    String expectedValue = '[{"SUCCESS"}]';
    
     System.assertEquals(expectedValue, actualValue,'Incorrect Response');
     System.assertEquals(200, response.getStatusCode(),'Unexpected status code returned');    
@@ -20,7 +20,7 @@ public class NpsCalloutServiceTest {
 
 
    @isTest
-   public static void isNpsCalloutFailTest()
+   public static void isNpsCalloutFail()
    {  
    // mock callout class 
     Test.setMock(HttpCalloutMock.class, new OrderNpsHttpCalloutFailMock()); 
@@ -29,7 +29,7 @@ public class NpsCalloutServiceTest {
     HttpResponse response = NpsCalloutService.sendRequest(requestPayload);
     String contentType = response.getHeader('Content-Type');
     String actualValue = response.getBody();
-    String expectedValue = '[{"Description": "SERVER_ERROR"}]';
+    String expectedValue = '[{"SERVER_ERROR"}]';
     
     System.assertEquals(expectedValue, actualValue,'Incorrect Response');
     System.assertEquals(500, response.getStatusCode(),'Unexpected status code returned');   

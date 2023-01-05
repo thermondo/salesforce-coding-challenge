@@ -2,16 +2,37 @@
 public class OrderNpsInvocableActionTest {
 
     @testSetup static void setup() {
+
+       //To do : Data setup with all the releted records . Below created data may not represt teh real schema , intention is to cover the implemented code in the assignment
        Id personAccountRecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('PersonAccount').getRecordTypeId();
       
-       Account acc = new Account(FirstName = 'testAccountName',LastName= 'testAccountLastName' , RecordTypeId = personAccountRecordTypeId, PersonEmail='testaccountholder@abc.com');
-       insert acc;    
-        
-       Order testOrder = new Order(AccountId=acc.Id,EffectiveDate=date.newinstance(2023, 01, 01),Status='Draft');
+       Account testPersonAccount = new Account(FirstName = 'testAccountName',LastName= 'testAccountLastName' , RecordTypeId = personAccountRecordTypeId, PersonEmail='testaccountholder@abc.com');
+       insert testPersonAccount;  
+       
+       Contract testContract = new Contract(AccountId=testPersonAccount.Id,ContractTerm=10,Status='Draft',StartDate=date.newinstance(2023, 01, 01));
+       insert testContract;
+
+
+       Product2 testProduct = new Product2(name='sample product' , IsActive=true);
+       insert testProduct;
+
+       Order testOrder = new Order(AccountId=testPersonAccount.Id,EffectiveDate=date.newinstance(2023, 01, 01),Status='Draft',ContractId=testContract.Id,Pricebook2Id=Test.getStandardPricebookId());
        insert testOrder;
 
+        // insert  PriceBookEntry
+        PriceBookEntry testPriceBookEntry = new PriceBookEntry();
+        testPriceBookEntry.Product2Id=testProduct.Id;
+        testPriceBookEntry.Pricebook2Id=Test.getStandardPricebookId();
+        testPriceBookEntry.UnitPrice=2000;
+        testPriceBookEntry.IsActive=true;
+        insert testPriceBookEntry;
+
+        //Activate the contract
+        testContract.Status='Activated';
+        update testContract;
     }
 
+//To Do : Statndard integration tests for multiple status codes .Creation of test factory
     @isTest
     static void orderNpsInvocableActionMethodSuccessTest(){
         Id orderId =  [SELECT Id from Order limit 1].Id;
@@ -19,10 +40,10 @@ public class OrderNpsInvocableActionTest {
 
         Test.startTest();
         List<String> actualResponse = OrderNpsInvocableAction.sendNpsRequest(new List<String>{orderId});
-        String expectedResponse = '[{"Description": "SUCCESS"}]';
+        String expectedResponse = '[{"SUCCESS"}]';
         Test.stopTest();
 
-        System.assertEquals(expectedResponse, actualResponse[0],'Integration is returning incorrect response');
+        System.assertEquals(expectedResponse, actualResponse[0],'Incorrect Success response');
     }
    
     @isTest
@@ -32,10 +53,10 @@ public class OrderNpsInvocableActionTest {
        
         Test.startTest();
         List<String> actualResponse = OrderNpsInvocableAction.sendNpsRequest(new List<String>{orderId});
-        String expectedResponse = '[{"Description": "SERVER_ERROR"}]';
+        String expectedResponse = '[{"SERVER_ERROR"}]';
         Test.stopTest();
         
-        System.assertEquals(expectedResponse, actualResponse[0],'Integration is returning incorrect response');
+        System.assertEquals(expectedResponse, actualResponse[0],'Incorrect failed response');
 
     }
 }

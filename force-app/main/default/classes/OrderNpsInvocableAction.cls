@@ -7,6 +7,7 @@
 *******************************************************************************************/
 
 public  with sharing class  OrderNpsInvocableAction {
+    private Static final Integer NPS_REQUEST_LIMIT = 30 ;
 
     @InvocableMethod(
         label = 'Send Request to NPS Service'
@@ -26,12 +27,26 @@ public  with sharing class  OrderNpsInvocableAction {
            for(String npsRequest : npsRequests){
            
             HttpResponse response = NpsCalloutService.sendRequest(npsRequest);
-            //To do : Implement handling for response, we can send status code to flow so that admin can implement additional 
-            //        exception handling
-            //To do : IMplementation of error handling alerts/messages
-            npsResponses.add(response.getbody());
+             /*
+
+             * To do : Implement handling for response, we are send status to flow so that admin can implement additional 
+                       handling
+			 * To do : Implementation of error handling alerts/messages 
+                       Admin can maitain a custom metadatatype to store the mapping of status code and error/alert message 
+                       and can be added on flow level.
+
+            */
+             npsResponses.add(response.getBody());
            }
         }
+
+
+        /* TO DO
+        Managing the return value and status of NPS callout
+         -Returning message body , can be stored on the record in a field 'NPSCalloutStatus__c' to mark if NPS call was succuess or not
+         -This 'NPSCalloutStatus__c' field can be used to ensure no duplicat callout to the NPS System
+         -In case of any issues , Salesforce Admin can retry NPS callout manually based on the value of 'NPSCalloutStatus__c'
+        */
         return npsResponses;
     }
 
@@ -49,7 +64,7 @@ public  with sharing class  OrderNpsInvocableAction {
                 npsRequest.orderNumber = orderRecord.OrderNumber;
                 npsRequest.customerEmail = orderRecord.Account.PersonEmail;
                 npsRequestsWrapper.add(npsRequest);
-                if(npsRequestsWrapper.size()>=30)
+                if(npsRequestsWrapper.size()>= NPS_REQUEST_LIMIT)
                 {
                     npsReqeusts.add(JSON.serialize(npsRequestsWrapper));
                     npsRequestsWrapper.clear();
