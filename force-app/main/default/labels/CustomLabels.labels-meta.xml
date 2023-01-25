@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomLabels xmlns="http://soap.sforce.com/2006/04/metadata">
+    <labels>
+        <fullName>NPS_Integration_Orders_Ids_Not_Found_Error</fullName>
+        <categories>Integration</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NPS Integration Orders Ids Not Found Error</shortDescription>
+        <value>No Valid Order Info Found</value>
+    </labels>
+    <labels>
+        <fullName>NPS_Integration_Orders_Not_Found_Error</fullName>
+        <categories>Integration</categories>
+        <language>en_US</language>
+        <protected>true</protected>
+        <shortDescription>NPS Integration Orders Not Found Error</shortDescription>
+        <value>No Valid Orders Found</value>
+    </labels>
+</CustomLabels>
