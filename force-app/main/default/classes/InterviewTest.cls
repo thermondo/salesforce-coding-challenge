@@ -8,20 +8,12 @@ private class InterviewTest {
          for(Order o : orders){
              OrderIds.add(o.id);
          }
-      
-         
+        
       Test.setMock(HttpCalloutMock.class, new MockGenerator());
          
-      Test.startTest();
-         
-      Interview.sendNPSScore(OrderIds);
-      
-        
-      Test.stopTest();
-        
+      Test.startTest();    
+      Interview.sendNPSScore(OrderIds);  
+      Test.stopTest();   
        
-    }
-}
-
     }
 }
