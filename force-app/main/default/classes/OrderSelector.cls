@@ -5,7 +5,7 @@ public with sharing class OrderSelector {
         return new Set<String>{
             'Id',
             'OrderNumber',
-            'AccountId.PersonEmail'
+            'Account.PersonEmail'
         };
     }
 

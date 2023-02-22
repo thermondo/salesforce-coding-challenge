@@ -14,7 +14,12 @@ public with sharing class SendOrderNotificationService {
 
         List<OrderNotificationData> orderNotificationDataList;
 
-        new OrderSelector().getOrderByIds(this.orderIdsToSendNotification);
+        List<Order> orders = new OrderSelector().getOrderByIds(this.orderIdsToSendNotification);
+
+        for(Order order : orders){
+            OrderNotificationData OrderNotificationData = new OrderNotificationData(order.Id, order.OrderNumber, order.Account.PersonEmail);
+            orderNotificationDataList.add(OrderNotificationData);
+        }
 
         if(this.sendOrderNotificationApi.sendOrderNotification(orderNotificationDataList)){
             
