@@ -1,4 +1,5 @@
 {
+  "plugins": ["@prettier/plugin-xml", "prettier-plugin-apex"],
   "trailingComma": "all",
   "arrowParens": "always",
   "printWidth": 120,
