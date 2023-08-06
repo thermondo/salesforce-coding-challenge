@@ -5,19 +5,19 @@
     <standardValue>
         <fullName>Draft</fullName>
         <default>false</default>
-        <label>Draft</label>
+        <label>Entwurf</label>
         <groupingString>Draft</groupingString>
     </standardValue>
     <standardValue>
         <fullName>Activated</fullName>
         <default>false</default>
-        <label>Activated</label>
+        <label>Aktiviert</label>
         <groupingString>Activated</groupingString>
     </standardValue>
     <standardValue>
-        <fullName>Fulfilled</fullName>
+        <fullName>Fullfilled</fullName>
         <default>false</default>
-        <label>Fulfilled</label>
+        <label>Fullfilled</label>
         <groupingString>Activated</groupingString>
     </standardValue>
 </StandardValueSet>
