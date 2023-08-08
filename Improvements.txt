@@ -1,0 +1,10 @@
+//Improvements/limitations
+1. considering only one contact is related to the account. 
+2. The Authorization parameters needs to be pre-deployment steps (or scripted) username-password
+3. Its best practice to throw the exception or log the exception to notify the admin/user (create custom obejct and log errors)
+4. Emails can be sent to admin if there is success or Errors (using Email messaging API)
+5. Erros Handling API is defined but not completed(can be used on various scenarios: order Id missing, callout failures)
+
+//concerns/Problems:
+When I do a POST request to the given endpoint URL (with given authentication credentials) I get Unauthorized request error
+
