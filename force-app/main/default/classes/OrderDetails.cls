@@ -2,7 +2,7 @@
  * @description       : To fetch Order that has status 'fullfilled' and send the order details to NPS Service
  * @author            : ChangeMeIn@UserSettingsUnder.SFDoc
  * @group             : 
- * @last modified on  : 08-06-2023
+ * @last modified on  : 08-08-2023
  * @last modified by  : ChangeMeIn@UserSettingsUnder.SFDoc
 **/
 public with sharing class OrderDetails {
@@ -52,6 +52,7 @@ public with sharing class OrderDetails {
                 makeCallout(JSON.serializePretty(custOrders));
             }
         } catch (Exception e) {
+            NpsCalloutService.setErrorResponse(NpsCalloutService.errors.get(4));
             //Improvement point: I prefer to throw the exception or log the exception to notify the admin/user
             System.debug('Exception error thrown: ' + e.getMessage());
         }
