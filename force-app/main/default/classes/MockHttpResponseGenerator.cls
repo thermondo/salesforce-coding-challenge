@@ -7,7 +7,7 @@ global class MockHttpResponseGenerator implements HttpCalloutMock {
     global HTTPResponse respond(HTTPRequest req) {
         // Optionally, only send a mock response for a specific endpoint
         // and method.
-        System.assertEquals('https://salesforce-coding-challenge.herokuapp.com', req.getEndpoint());
+        System.assertEquals('callout:NPS_API_Callout/orders', req.getEndpoint());
         System.assertEquals('POST', req.getMethod());
         
         // Create a fake response

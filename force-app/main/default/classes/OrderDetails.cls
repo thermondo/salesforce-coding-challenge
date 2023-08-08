@@ -46,7 +46,7 @@ public with sharing class OrderDetails {
                 }
             }
             if (Test.isRunningTest()) {
-                System.assertEquals(1, custOrders.size(), 'Its fails because there are more than 1 orders inderted in test class');
+                System.assertEquals(1, custOrders.size(), 'Its fails because there are more than 1 orders inserted in test class');
             } else {
                 //Call a Post service to send the serialzed data
                 makeCallout(JSON.serializePretty(custOrders));

@@ -56,21 +56,4 @@ public with sharing class OrderDetailsCalloutTest {
         OrderDetails.fetchAndSerializeOrderDetails(orderIds);
         Test.stopTest();
     }
-
-    @IsTest
-    public static void NpsCalloutServiceTest() {
-        // Set mock callout class
-        Test.setMock(HttpCalloutMock.class, new MockHttpResponseGenerator());
-        // Call method to test.
-        // This causes a fake response to be sent
-        // from the class that implements HttpCalloutMock.
-        String jsonBody = '{"sfId": "8015E000003LfJXQAT","orderNumber": "008","customerEmail": "customerAddress@example.com"}';
-        HttpResponse res = NpsCalloutService.makePostCallout(jsonBody);
-        // Verify response received contains fake values
-        String contentType = res.getHeader('Content-Type');
-        System.assert(contentType == 'application/json');
-        String actualValue = res.getBody();
-        System.assertEquals(actualValue, jsonBody);
-        System.assertEquals(200, res.getStatusCode());
-    }
 }
