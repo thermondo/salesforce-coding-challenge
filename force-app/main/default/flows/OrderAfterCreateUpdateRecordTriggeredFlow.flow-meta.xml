@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <description>This is to do HTTP callouts to a NPS Service, whenever an Order got fulfilled</description>
+        <name>OrderNPSCallout</name>
+        <label>Order NPS Callout</label>
+        <locationX>50</locationX>
+        <locationY>431</locationY>
+        <actionName>OrderInvocableService</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>CurrentTransaction</flowTransactionModel>
+        <inputParameters>
+            <name>fulfilledOrders</name>
+            <value>
+                <elementReference>$Record.Id</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
+    <apiVersion>58.0</apiVersion>
+    <decisions>
+        <description>This decision is to check if the Order has Fulfilled or Not</description>
+        <name>IsOrderFulfilled</name>
+        <label>Is Order Fulfilled?</label>
+        <locationX>182</locationX>
+        <locationY>323</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>YesOrderFulfilled</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Record.Status</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Fulfilled</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>OrderNPSCallout</targetReference>
+            </connector>
+            <label>Yes, Order Fulfilled</label>
+        </rules>
+    </decisions>
+    <description>Order After Create Update Record Triggered Flow</description>
+    <environments>Default</environments>
+    <interviewLabel>Order After Create Update Record Triggered Flow {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Order After Create Update Record Triggered Flow</label>
+    <processMetadataValues>
+        <name>BuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>CanvasMode</name>
+        <value>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
+        </value>
+    </processMetadataValues>
+    <processMetadataValues>
+        <name>OriginBuilderType</name>
+        <value>
+            <stringValue>LightningFlowBuilder</stringValue>
+        </value>
+    </processMetadataValues>
+    <processType>AutoLaunchedFlow</processType>
+    <start>
+        <locationX>56</locationX>
+        <locationY>0</locationY>
+        <connector>
+            <targetReference>IsOrderFulfilled</targetReference>
+        </connector>
+        <filterFormula>NOT( {!$Permission.OrderAutomationByPass})</filterFormula>
+        <object>Order</object>
+        <recordTriggerType>CreateAndUpdate</recordTriggerType>
+        <triggerType>RecordAfterSave</triggerType>
+    </start>
+    <status>Active</status>
+</Flow>
