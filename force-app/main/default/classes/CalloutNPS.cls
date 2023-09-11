@@ -34,7 +34,10 @@ public class CalloutNPS{
             res.returnMessage = makeCallout(indvList);
         }
         List<Results> resList = new List<Results>();  
-        resList.add(res);
+        for(Request r : requests){
+            resList.add(res);
+        }
+        System.debug('returnMessage ' + resList);
         return resList;
     }
 
@@ -51,7 +54,6 @@ public class CalloutNPS{
                 httpResponseCode = response.getStatusCode();
                 responseMessage = response.getBody();   
                 returnMessage = httpResponseCode + ' : ' + responseMessage ;
-                System.debug('returnMessage ' + returnMessage);
             }catch (Exception e) {         
                 System.debug('Error:' + e.getMessage() + ' Line no:' + e.getLineNumber() );           
             }
