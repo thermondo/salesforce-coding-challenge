@@ -81,7 +81,6 @@ public class CalloutNPS{
     public class Results{
         @InvocableVariable(label='Output Response')
         public String returnMessage;
-
     }
 
 
