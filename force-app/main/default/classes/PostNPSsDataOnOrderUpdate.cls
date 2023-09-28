@@ -3,7 +3,7 @@ public with sharing class PostNPSsDataOnOrderUpdate {
     @InvocableMethod
     public static List<String> MakeCallout(List<ID> ids){
         
-        List<String> outcomeMsg = new List<String>();
+        List<String> outcomeMsg = new List<String>(); 
         
         List<OrderWrapper> wrapList = new List<OrderWrapper>();
         Integer counter = 0;
