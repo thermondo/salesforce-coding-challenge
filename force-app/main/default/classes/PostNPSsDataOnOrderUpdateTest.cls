@@ -2,7 +2,7 @@
 public class PostNPSsDataOnOrderUpdateTest {
     
     @testSetup static void setup() {
-        Product2 p = new Product2(); 
+        Product2 p = new Product2();
         p.Name = 'Test Product';
         p.Description='Test Product';
         p.productCode = 'ABC';
@@ -50,7 +50,6 @@ public class PostNPSsDataOnOrderUpdateTest {
             ord.status = 'Fulfilled';
             orderToUpdate.add(ord.Id);
         }
-        //update orderToUpdate;
         PostNPSsDataOnOrderUpdate.MakeCallout(orderToUpdate);
         
     }
