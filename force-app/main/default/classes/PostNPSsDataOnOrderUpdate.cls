@@ -3,7 +3,7 @@ public with sharing class PostNPSsDataOnOrderUpdate {
     @InvocableMethod
     public static List<String> MakeCallout(List<ID> ids){
         
-        List<String> outcomeMsg = new List<String>(); 
+        List<String> outcomeMsg = new List<String>();
         
         List<OrderWrapper> wrapList = new List<OrderWrapper>();
         Integer counter = 0;
@@ -47,7 +47,12 @@ public with sharing class PostNPSsDataOnOrderUpdate {
                 req.setHeader('Content-Type', 'application/json');
                 String JsonString = JSON.serialize(wrapperList);
                 req.setBody(JsonString);
-                res = h.send(req);
+                if(!Test.isRunningTest()){
+                    res = h.send(req);
+                } else{
+                    MockHttpResponseGenerator mc = new MockHttpResponseGenerator();
+                    res = mc.respond(req);
+                }
                 if ((res.getStatusCode() == 200) && res.getBody() != null) {
                     opMessage = 'Success!';
                 } else if (res.getStatusCode() == 400){
