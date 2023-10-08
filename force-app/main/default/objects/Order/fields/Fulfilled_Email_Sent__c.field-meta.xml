@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Fulfilled_Email_Sent__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>This checkbox if set to true means the email was sent to the customer when the status was changed to Fulfiled. The email won&apos;t be sent again, so the</description>
+    <externalId>false</externalId>
+    <label>Fulfilled Email Sent</label>
+    <trackHistory>false</trackHistory>
+    <type>Checkbox</type>
+</CustomField>

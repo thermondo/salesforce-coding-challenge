@@ -1,0 +1,30 @@
+Hey Thermondo Team,
+
+Thank you so much for this fun and mind-cardio challenge.
+
+Below are some points to what was added and the description.
+
+WORK DONE NOTES:
+====================
+1. I have created a custom setting called Disable_Automation__c. I am using the {!$Setup.Disable_Automation__c.Order_Disable_Automation__c} in the flow to decide whether to run the flow or not. ![Flow Custom setting Use](image.png)
+
+2. I have created a Remote Site setting called Thermondo_Challenge for the callout.
+3. I have created a Record Triggered after create-update flow on the object Order to call the Invocable action
+4. I have also created a checkbox field on Order object called Fulfilled_Email_Sent__c which is set in the above flow to avoid duplicate emails being sent to the customer.
+5. I have created one Invocable class called InvocableNPSServiceCallout and a test class for it called InvocableNPSServiceCalloutTest.
+6. I have also craeted a class to mock the callout called MockHttpResponseGenerator which is also used in the test class to mock the request and response for success(200) and failure(400) status code
+7. I have also put up code comments and POINTS in the class where I think the approach could be different or different options for the same scenario.
+8. I didn't know enough about the layering of code and separation of layers to incorporate it into the implementation but I would love to learn from you.
+
+LIST OF LIMITATIONS OR POSSIBLE PROBLEMS:
+============================================
+1. In the challenege it was mentioned that "do HTTP callouts to a NPS Service, whenever an Order got fulfilled". I understood it as a synchronous transaction. Considering that, the record triggered flow will always only send one order id to the invocable class, and if this needs to be bulkified and asynced, then it would be another approach around a bacth job or queueable. In both scenarios we would need to handle the 100 callouts limit.
+
+2. We can also come across heap size governor limit if there is too much order records.
+
+3. Passing single order id through the flow will work for a while, but will be an unoptimised soltuion, so async will have to be considered eventually.
+
+I hope I get to meet you soon to discuss the implementation.
+
+Thanks,
+Lavanya
