@@ -6,7 +6,7 @@ public with sharing class NPSService {
     //NPS InsertOrder Callout Method
     public HttpResponse insertOrders(List<Order> orders){   
              
-        if(orders.size() < 30){
+        if(orders.size() > 30){
             throw new NPSServiceException('More than 30 records can not send at once');
         }
 
