@@ -19,9 +19,6 @@
 */
 @isTest
 public class MockHttpResponseGenerator implements HttpCalloutMock {
-    
-    
-    
     public Integer statusCode;
     public MockHttpResponseGenerator(Integer strStatusCode){
         this.statusCode = strStatusCode;
@@ -42,7 +39,7 @@ public class MockHttpResponseGenerator implements HttpCalloutMock {
         }
         else{
             res.setStatusCode(statusCode);
-            res.setBody('{"BAD PAYLOAD"}}');
+            res.setBody('{"BAD PAYLOAD"}');
         }
         return res;
     }
