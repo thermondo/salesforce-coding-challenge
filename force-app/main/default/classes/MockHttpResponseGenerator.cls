@@ -21,12 +21,7 @@
 public class MockHttpResponseGenerator implements HttpCalloutMock {
     
     
-    /**
-    * @description : Implement this interface method
-    * @author Rohit | 08-07-2023 
-    * @param req 
-    * @return HTTPResponse 
-    **/
+    
     public Integer statusCode;
     public MockHttpResponseGenerator(Integer strStatusCode){
         this.statusCode = strStatusCode;
