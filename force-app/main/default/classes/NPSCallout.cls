@@ -20,7 +20,7 @@
 public with sharing class NPSCallout {
    //public static SendNPSDataWrapper.NPSCalloutOutput objNPsCalloutOutput ;
    @future(callout=true)
-   public static void callout(String strOrderDataJSON, List<String> orderIds){
+   public static void callout(List<Id> orderIds, String strOrderDataJSON ) { 
          
         try{
             HttpRequest req = new HttpRequest();
@@ -34,7 +34,6 @@ public with sharing class NPSCallout {
             Integer responseStatusCode = response.getStatusCode();
             system.debug('status code is--'+ responseStatusCode);
             System.debug('Response Body--'+ response.getBody());
-            Error_Log__c err = new Error_Log__c();
             List<Order> orderToUpdate = new List<Order>();
             switch on responseStatusCode{
                when 200{
@@ -58,6 +57,7 @@ public with sharing class NPSCallout {
                // Mapping the error twrapper class to show in flow
                   //objNPsCalloutOutput = getNpsCalloutOutput(response.getStatusCode(), response.getBody(), 'Failure');
                // Creating a record in Error Log Object in case of callout failure.
+               Error_Log__c err = new Error_Log__c();
                err.Class_Name__c = 'NPSCallout';
                err.Method_Name__c = 'callout';
                err.Request_Body__c	= strOrderDataJSON;
@@ -65,11 +65,16 @@ public with sharing class NPSCallout {
                err.Status__c = 'Failed in Callout';
                err.Status_Code__c = String.valueof(response.getStatusCode());
                err.Exception_Message__c = response.getBody();
+               if(Schema.sObjectType.Error_Log__c.isCreateable()){
+                  insert err;
+               }
                //updating the record in order object in case of callout failure to let user know of failure of sending data to NPS APP. So admin can look for error in error log object
                // to track the issue of failure.
-               List<Order> orderList = [Select Id, orderNumber, AccountId, NPS_Integration_Status__c, Email_Sent__c from Order where Id IN: orderIds WITH SECURITY_ENFORCED];
+               List<Order> orderList = [Select Id, orderNumber, AccountId, NPS_Integration_Status__c, Email_Sent__c, Status from Order where Id IN: orderIds WITH SECURITY_ENFORCED];
                      for(Order order : orderList){
                         order.NPS_Integration_Status__c = 'Failed';
+                        //Changing the Status back to Draft so the record-Triggered flow will not run in loop.
+                        order.Status = 'Draft';
                         orderToUpdate.add(order);
                      }
                   
@@ -79,9 +84,6 @@ public with sharing class NPSCallout {
                
             }
             
-            }
-            if(Schema.sObjectType.Error_Log__c.isCreateable()){
-               insert err;
             }
             
             if( Schema.sObjectType.Order.isUpdateable() && !orderToUpdate.isEmpty() ){

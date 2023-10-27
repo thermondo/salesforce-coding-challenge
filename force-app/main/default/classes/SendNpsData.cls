@@ -50,7 +50,7 @@ public with sharing class SendNpsData {
 
                 strOrderDataJSON = JSON.serialize(dataToSend);
                 system.debug('data to send--'+strOrderDataJSON);
-                NPSCallout.callout(strOrderDataJSON, orderIds);
+                NPSCallout.callout(orderIds, strOrderDataJSON);
 
             //outputList.add(objNPsCalloutOutput);
             //return outputList;
