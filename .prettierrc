@@ -1,9 +1,13 @@
 {
+<<<<<<< HEAD
+  "trailingComma": "none",
+=======
   "plugins": ["@prettier/plugin-xml", "prettier-plugin-apex"],
   "trailingComma": "all",
   "arrowParens": "always",
   "printWidth": 120,
   "semi": true,
+>>>>>>> origin/main
   "overrides": [
     {
       "files": "**/lwc/**/*.html",

@@ -5,8 +5,15 @@
       "default": true
     }
   ],
+<<<<<<< HEAD
+  "name": "Thermondo Coding Challenge",
+  "namespace": "",
+  "sfdcLoginUrl": "https://login.salesforce.com",
+  "sourceApiVersion": "58.0"
+=======
   "name": "thermondo-sfdc-challenge",
   "namespace": "",
   "sfdcLoginUrl": "https://login.salesforce.com",
   "sourceApiVersion": "55.0"
+>>>>>>> origin/main
 }
